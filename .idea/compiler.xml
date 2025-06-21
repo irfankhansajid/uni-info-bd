@@ -12,9 +12,13 @@
         <module name="uniinfo-bd" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TaskManagement" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="TaskManagement" options="-parameters" />
       <module name="uniinfo-bd" options="-parameters" />
     </option>
   </component>
