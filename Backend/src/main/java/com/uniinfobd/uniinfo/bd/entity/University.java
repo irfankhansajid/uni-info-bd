@@ -33,17 +33,12 @@ public class University {
     @Size(max = 300, message = "University name cannot exceed 300 characters")
     private String name;
 
-    @Column(name = "name_bangla")
-    @Size(max = 300, message = "Bangla name cannot exceed 300 characters")
-    private String nameBangla;
 
 
     @Column(nullable = false)
     @NotBlank(message = "Location is required")
     private String location;
 
-    @Column(name = "location_bangla")
-    private String locationBangla;
 
 
     @NotNull
@@ -61,8 +56,7 @@ public class University {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "description_bangla", columnDefinition = "TEXT")
-    private String descriptionBangla;
+
 
     @Column(name = "website_url")
     @Pattern(regexp = "^(https?://).*", message = "Website URL must start with http:// or https://")
