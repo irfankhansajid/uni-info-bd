@@ -5,3 +5,4 @@ copilot-prompt.md
 .idea/misc.xml
 .idea/vcs.xml
 .idea/.gitignore
+Backend/src/main/resources/.env
