@@ -12,7 +12,7 @@ import java.util.List;
 public interface UniversityRepository extends JpaRepository<University, Long> {
 
 
-    List<University> findNameIgnoreCaseContaining(String name);
+    List<University> findByNameIgnoreCaseContaining(String name);
 
     List<University> findByLocationIgnoreCaseContaining(String location);
 

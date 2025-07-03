@@ -3,6 +3,7 @@ package com.uniinfobd.uniinfo.bd.service;
 
 import com.uniinfobd.uniinfo.bd.dto.UniversityRequestDTO;
 import com.uniinfobd.uniinfo.bd.dto.UniversityResponseDTO;
+import com.uniinfobd.uniinfo.bd.dto.UniversityUpdateDTO;
 import com.uniinfobd.uniinfo.bd.entity.UniversityType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,9 @@ public interface UniversityService {
     Page<UniversityResponseDTO> getAllUniversities(Pageable pageable);
     UniversityResponseDTO updateUniversity(Long id, UniversityRequestDTO universityRequestDTO);
     void deleteUniversity(Long id);
+
+    // Patch
+    UniversityResponseDTO patchUniversity(Long id, UniversityUpdateDTO universityUpdateDTO);
 
     // search methods
 

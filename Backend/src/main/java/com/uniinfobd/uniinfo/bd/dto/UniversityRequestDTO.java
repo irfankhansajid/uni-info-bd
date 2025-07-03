@@ -31,7 +31,8 @@ public class UniversityRequestDTO {
     @Pattern(regexp = "^(https?://).*", message = "Website URL must start with http:// or https://")
     private String websiteUrl;
 
-    @Pattern(regexp = "^(\\+8801|01)[0-9]{9}$", message = "Invalid Bangladeshi phone number")
+    
+    @Size(max = 20, message = "Phone number cannot exceed 20 characters")
     private String phoneNumber;
 
 

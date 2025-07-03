@@ -3,6 +3,8 @@ package com.uniinfobd.uniinfo.bd.controller;
 
 import com.uniinfobd.uniinfo.bd.dto.UniversityRequestDTO;
 import com.uniinfobd.uniinfo.bd.dto.UniversityResponseDTO;
+import com.uniinfobd.uniinfo.bd.dto.UniversityUpdateDTO;
+import com.uniinfobd.uniinfo.bd.entity.UniversityType;
 import com.uniinfobd.uniinfo.bd.service.UniversityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,10 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,17 +21,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/universities")
 @Tag(name = "University", description = "University management APIs")
 public class UniversityController {
 
     private final UniversityService universityService;
+
+    public UniversityController(UniversityService universityService) {
+        this.universityService = universityService;
+    }
 
     @Operation(summary = "Create a new university", description ="Creates a new university and returns the created university details")
     @ApiResponses(value = {
@@ -95,6 +96,24 @@ public class UniversityController {
         return ResponseEntity.ok(universityService.updateUniversity(id, universityRequestDTO));
     }
 
+
+    // Update specific fields
+
+    @Operation(summary = "Partially update a university",
+            description = "Updates specific fields of an existing university")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "University updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "University not found")
+    })
+    @PatchMapping("/{id}")
+    public ResponseEntity<UniversityResponseDTO> patchUniversity(
+            @Parameter(description = "Student Id", required = true) @PathVariable Long id,
+            @Valid @RequestBody UniversityUpdateDTO updateDTO
+    ) {
+        return ResponseEntity.ok(universityService.patchUniversity(id, updateDTO));
+    }
+
     // Delete a university by ID
 
     @Operation(summary = "Delete University by ID", description = "Deletes a university by ID")
@@ -110,7 +129,7 @@ public class UniversityController {
         return ResponseEntity.noContent().build();
     }
 
-    // Seacrh universities by name
+    // Search universities by name
     @Operation(summary = "Search universities by name", description = "Return universities that match the name search")
     @GetMapping("/search/name/{name}")
     public ResponseEntity<List<UniversityResponseDTO>> searchByName(@Parameter(description = "Name to search for", required = true) @PathVariable String name) {
@@ -122,6 +141,13 @@ public class UniversityController {
     @GetMapping("/search/location/{location}")
     public ResponseEntity<List<UniversityResponseDTO>> searchByLocation(@Parameter(description = "Location to search for", required = true) @PathVariable String location) {
         return ResponseEntity.ok(universityService.findByLocation(location));
+    }
+
+    // Search universities by type
+    @Operation(summary = "Search universities by type", description = "Return universities that match the type search")
+    @GetMapping("/search/type/{type}")
+    public ResponseEntity<List<UniversityResponseDTO>> searchByType(@Parameter(description = "Type to search for", required = true) @PathVariable UniversityType type) {
+        return ResponseEntity.ok(universityService.findByType(type));
     }
     
 }

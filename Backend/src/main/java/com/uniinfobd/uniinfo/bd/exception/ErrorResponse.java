@@ -1,14 +1,13 @@
 package com.uniinfobd.uniinfo.bd.exception;
 
-import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class ErrorResponse {
   
   private int status;
@@ -16,4 +15,10 @@ public class ErrorResponse {
   private List<String> errors;
   private String timestamp;
 
+  public ErrorResponse(int status, String message, List<String> errors, String timestamp) {
+    this.status = status;
+    this.message = message;
+    this.errors = errors;
+    this.timestamp = timestamp;
+  }
 }

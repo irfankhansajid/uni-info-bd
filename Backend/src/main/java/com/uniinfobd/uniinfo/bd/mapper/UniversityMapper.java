@@ -7,32 +7,36 @@ import com.uniinfobd.uniinfo.bd.entity.University;
 
 public class UniversityMapper {
 
+    private UniversityMapper() {
+        // Private constructor to prevent instantiation
+    }
+
     public static UniversityResponseDTO toResponseDTO(University university) {
         if (university == null) return null;
 
-        return UniversityResponseDTO.builder()
-                .id(university.getId())
-                .name(university.getName())
-                .location(university.getLocation())
-                .type(university.getType())
-                .establishedYear(university.getEstablishedYear())
-                .description(university.getDescription())
-                .websiteUrl(university.getWebsiteUrl())
-                .phoneNumber(university.getPhoneNumber())
-                .email(university.getEmail())
-                .tuitionFeeRangeMin(university.getTuitionFeeRangeMin())
-                .tuitionFeeRangeMax(university.getTuitionFeeRangeMax())
-                .availableSubjects(university.getAvailableSubjects())
-                .totalStudents(university.getTotalStudents())
-                .totalFaculty(university.getTotalFaculty())
-                .campusSizeAcres(university.getCampusSizeAcres())
-                .logoUrl(university.getLogoUrl())
-                .localRankingPosition(university.getLocalRankingPosition())
-                .internationalRankingPosition(university.getInternationalRankingPosition())
-                .createdAt(university.getCreatedAt())
-                .updatedAt(university.getUpdatedAt())
-                .build();
+        UniversityResponseDTO dto = new UniversityResponseDTO();
+        dto.setId(university.getId());
+        dto.setName(university.getName());
+        dto.setLocation(university.getLocation());
+        dto.setType(university.getType());
+        dto.setEstablishedYear(university.getEstablishedYear());
+        dto.setDescription(university.getDescription());
+        dto.setWebsiteUrl(university.getWebsiteUrl());
+        dto.setPhoneNumber(university.getPhoneNumber());
+        dto.setEmail(university.getEmail());
+        dto.setTuitionFeeRangeMin(university.getTuitionFeeRangeMin());
+        dto.setTuitionFeeRangeMax(university.getTuitionFeeRangeMax());
+        dto.setAvailableSubjects(university.getAvailableSubjects());
+        dto.setTotalStudents(university.getTotalStudents());
+        dto.setTotalFaculty(university.getTotalFaculty());
+        dto.setCampusSizeAcres(university.getCampusSizeAcres());
+        dto.setLogoUrl(university.getLogoUrl());
+        dto.setLocalRankingPosition(university.getLocalRankingPosition());
+        dto.setInternationalRankingPosition(university.getInternationalRankingPosition());
+        dto.setCreatedAt(university.getCreatedAt());
+        dto.setUpdatedAt(university.getUpdatedAt());
 
+        return dto;
     }
 
     public static University toEntity(UniversityRequestDTO requestDTO) {
@@ -55,7 +59,7 @@ public class UniversityMapper {
         university.setLogoUrl(requestDTO.getLogoUrl());
         university.setLocalRankingPosition(requestDTO.getLocalRankingPosition());
         university.setInternationalRankingPosition(requestDTO.getInternationalRankingPosition());
-        university.setIsActive(requestDTO.getIsActive());
+        university.setActive(requestDTO.getIsActive());
 
         return university;
 
@@ -65,25 +69,41 @@ public class UniversityMapper {
     public static void updateEntityFromDto(UniversityRequestDTO requestDTO, University university) {
         if (requestDTO == null || university == null) return;
 
-        if (requestDTO.getName() != null) university.setName(requestDTO.getName());
-        if (requestDTO.getLocation() != null) university.setLocation(requestDTO.getLocation());
-        if (requestDTO.getType() != null) university.setType(requestDTO.getType());
-        if (requestDTO.getEstablishedYear() != null) university.setEstablishedYear(requestDTO.getEstablishedYear());
-        if (requestDTO.getDescription() != null) university.setDescription(requestDTO.getDescription());
-        if (requestDTO.getWebsiteUrl() != null) university.setWebsiteUrl(requestDTO.getWebsiteUrl());
-        if (requestDTO.getPhoneNumber() != null) university.setPhoneNumber(requestDTO.getPhoneNumber());
-        if (requestDTO.getEmail() != null) university.setEmail(requestDTO.getEmail());
-        if (requestDTO.getTuitionFeeRangeMin() != null) university.setTuitionFeeRangeMin(requestDTO.getTuitionFeeRangeMin());
-        if (requestDTO.getTuitionFeeRangeMax() != null) university.setTuitionFeeRangeMax(requestDTO.getTuitionFeeRangeMax());
-        if (requestDTO.getAvailableSubjects() != null) university.setAvailableSubjects(requestDTO.getAvailableSubjects());
-        if (requestDTO.getTotalStudents() != null) university.setTotalStudents(requestDTO.getTotalStudents());
-        if (requestDTO.getTotalFaculty() != null) university.setTotalFaculty(requestDTO.getTotalFaculty());
-        if (requestDTO.getCampusSizeAcres() != null) university.setCampusSizeAcres(requestDTO.getCampusSizeAcres());
-        if (requestDTO.getLogoUrl() != null) university.setLogoUrl(requestDTO.getLogoUrl());
-        if (requestDTO.getLocalRankingPosition() != null) university.setLocalRankingPosition(requestDTO.getLocalRankingPosition());
-        if (requestDTO.getInternationalRankingPosition() != null) university.setInternationalRankingPosition(requestDTO.getInternationalRankingPosition());
-        if (requestDTO.getIsActive() != null) university.setIsActive(requestDTO.getIsActive());
+        updateBasicInfo(requestDTO, university);
+        updateContactInfo(requestDTO, university);
+        updateAcademicInfo(requestDTO, university);
+        updateRankingInfo(requestDTO, university);
+}
 
+    private static void updateBasicInfo(UniversityRequestDTO dto, University university) {
+        if (dto.getName() != null) university.setName(dto.getName());
+        if (dto.getLocation() != null) university.setLocation(dto.getLocation());
+        if (dto.getType() != null) university.setType(dto.getType());
+        if (dto.getEstablishedYear() != null) university.setEstablishedYear(dto.getEstablishedYear());
+        if (dto.getDescription() != null) university.setDescription(dto.getDescription());
+        if (dto.getWebsiteUrl() != null) university.setWebsiteUrl(dto.getWebsiteUrl());
+        if (dto.getLogoUrl() != null) university.setLogoUrl(dto.getLogoUrl());
+        if (dto.getIsActive() != null) university.setActive(dto.getIsActive());
     }
+
+    private static void updateContactInfo(UniversityRequestDTO dto, University university) {
+        if (dto.getPhoneNumber() != null) university.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getEmail() != null) university.setEmail(dto.getEmail());
+    }
+
+    private static void updateAcademicInfo(UniversityRequestDTO dto, University university) {
+        if (dto.getAvailableSubjects() != null) university.setAvailableSubjects(dto.getAvailableSubjects());
+        if (dto.getTotalStudents() != null) university.setTotalStudents(dto.getTotalStudents());
+        if (dto.getTotalFaculty() != null) university.setTotalFaculty(dto.getTotalFaculty());
+        if (dto.getCampusSizeAcres() != null) university.setCampusSizeAcres(dto.getCampusSizeAcres());
+        if (dto.getTuitionFeeRangeMin() != null) university.setTuitionFeeRangeMin(dto.getTuitionFeeRangeMin());
+        if (dto.getTuitionFeeRangeMax() != null) university.setTuitionFeeRangeMax(dto.getTuitionFeeRangeMax());
+    }
+
+    private static void updateRankingInfo(UniversityRequestDTO dto, University university) {
+        if (dto.getLocalRankingPosition() != null) university.setLocalRankingPosition(dto.getLocalRankingPosition());
+        if (dto.getInternationalRankingPosition() != null) university.setInternationalRankingPosition(dto.getInternationalRankingPosition());
+    }
+
 
 }

@@ -6,3 +6,8 @@ copilot-prompt.md
 .idea/vcs.xml
 .idea/.gitignore
 Backend/src/main/resources/.env
+.vscode/launch.json
+.idea/dataSources.xml
+/.github/
+/.idea/
+/.vscode/
