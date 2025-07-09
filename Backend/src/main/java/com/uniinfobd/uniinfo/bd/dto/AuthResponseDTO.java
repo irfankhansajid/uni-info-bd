@@ -1,6 +1,7 @@
 package com.uniinfobd.uniinfo.bd.dto;
 
 import com.uniinfobd.uniinfo.bd.entity.Role;
+import com.uniinfobd.uniinfo.bd.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,3 +19,5 @@ public class AuthResponseDTO {
     private String lastName;
     private Role role;
 }
+
+
